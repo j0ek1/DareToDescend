@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 5388202154043485208}
   - component: {fileID: 5388202154043485215}
   - component: {fileID: 7577940402262916251}
-  - component: {fileID: 5388202154043485210}
-  - component: {fileID: 8135259110514193298}
   - component: {fileID: -7303193727571537457}
+  - component: {fileID: 5388202154043485210}
+  - component: {fileID: 9154890363844281438}
   m_Layer: 0
   m_Name: Splitter
   m_TagString: Enemy
@@ -104,42 +104,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
---- !u!114 &5388202154043485210
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5388202154043485214}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6133c4802a38e2c4aaf716305f88a126, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 5
-  player: {fileID: 0}
-  gameControl: {fileID: 0}
-  lookSpeed: 180
-  rb: {fileID: 0}
-  delayStart: 0
-  deathEffect:
-  - {fileID: 198421851780535296, guid: 87e690d660041234abca65a84b837d5b, type: 3}
-  deathEID: 0
---- !u!114 &8135259110514193298
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5388202154043485214}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 438d73bf58a73dc4ab41ed29fd2b7500, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  e: {fileID: 0}
-  speed: 0
-  attackEffect: {fileID: 9043871809213866069, guid: 9bc57bdc196bf0040808bf29c50c352a, type: 3}
 --- !u!50 &-7303193727571537457
 Rigidbody2D:
   serializedVersion: 4
@@ -161,3 +125,43 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &5388202154043485210
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5388202154043485214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6133c4802a38e2c4aaf716305f88a126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 1
+  player: {fileID: 0}
+  gameControl: {fileID: 0}
+  lookSpeed: 240
+  rb: {fileID: 0}
+  delayStart: 0
+  deathEffect:
+  - {fileID: 198421851780535296, guid: 87e690d660041234abca65a84b837d5b, type: 3}
+  deathEID: 0
+  splitter: {fileID: 0}
+--- !u!114 &9154890363844281438
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5388202154043485214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b89eca71deb53ee44b9824afa4e76565, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  e: {fileID: 0}
+  speed: 0
+  health: 5
+  gameControl: {fileID: 0}
+  attackEffect: {fileID: 9043871809213866069, guid: 9bc57bdc196bf0040808bf29c50c352a, type: 3}
+  splitNumber: 1

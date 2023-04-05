@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.VFX;
 
-public class ESplitter : MonoBehaviour
+public class EWalker : MonoBehaviour
 {
     public Enemy e;
     public float speed;
     private float maxSpeed = 2.5f;
+
     private bool canAttack = true;
     private float attackTimer = 0f;
+    private float attackRange = 0.75f;
     public VisualEffect attackEffect;
-    public GameObject splitter;
-    private int splitNumber = 3;
 
     void Start()
     {
@@ -31,7 +31,8 @@ public class ESplitter : MonoBehaviour
             e.rb.velocity = transform.up * speed; // Move the enemy
         }
 
-        if (Vector2.Distance(transform.position, e.player.transform.position) < .75f && canAttack)
+        // If in attack range, attack player
+        if (Vector2.Distance(transform.position, e.player.transform.position) < attackRange && canAttack)
         {
             e.player.health -= 1;
             GameObject effect = Instantiate(attackEffect.gameObject, transform.position, Quaternion.identity, transform);
@@ -39,7 +40,7 @@ public class ESplitter : MonoBehaviour
             attackTimer = .5f;
             canAttack = false;
         }
-        if (!canAttack)
+        if (!canAttack) // Countdown attack timer
         {
             attackTimer -= Time.deltaTime;
         }

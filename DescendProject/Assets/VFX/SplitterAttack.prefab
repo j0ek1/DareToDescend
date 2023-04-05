@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 9043871809213866069}
   - component: {fileID: 9043871809213866068}
   m_Layer: 0
-  m_Name: WalkerAttack
+  m_Name: SplitterAttack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -41,7 +41,7 @@ VisualEffect:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9043871809213866071}
   m_Enabled: 1
-  m_Asset: {fileID: 8926484042661614526, guid: f3be2cdbd8c868447bd3681a2cbf16a8, type: 3}
+  m_Asset: {fileID: 8926484042661614526, guid: ad1b9b525a1678e448f0aa86a7f488b4, type: 3}
   m_InitialEventName: OnPlay
   m_InitialEventNameOverriden: 0
   m_StartSeed: 0

@@ -35,6 +35,7 @@ public class GameControl : MonoBehaviour
     private Vector2 playerStartPos = new Vector2();
     public List<GameObject> currentEnemies = new List<GameObject>();
     public List<GameObject> enemyType;
+    public GameObject splitterPrefab;
 
     private int xLBound = -5;
     private int xUBound = 6;
@@ -214,6 +215,13 @@ public class GameControl : MonoBehaviour
         xUBound = 6;
         yLBound = -3;
         yUBound = 4;
+    }
+
+    // Respawn code to help splitter respawn with a new prefab and not a clone
+    public GameObject RespawnSplitter(Vector3 respawnPos)
+    {
+        GameObject splitter = Instantiate(splitterPrefab, respawnPos, Quaternion.identity);
+        return splitter;
     }
 
     public void Descend()

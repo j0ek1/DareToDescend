@@ -682,6 +682,7 @@ MonoBehaviour:
   enemyType:
   - {fileID: 5388202154043485214, guid: 79488b35843afd947a1e786e420a85f3, type: 3}
   - {fileID: 5388202154043485214, guid: 88cfb45a177ce054db7f20bf435159f3, type: 3}
+  splitterPrefab: {fileID: 5388202154043485214, guid: a833c91024144bf46b071bc3d773ac5e, type: 3}
 --- !u!4 &723018292
 Transform:
   m_ObjectHideFlags: 0

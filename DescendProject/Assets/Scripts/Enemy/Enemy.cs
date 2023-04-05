@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.VFX;
 
 public class Enemy : MonoBehaviour
@@ -16,6 +17,8 @@ public class Enemy : MonoBehaviour
     public VisualEffect[] deathEffect;
     public int deathEID;
 
+    public ESplitter splitter;
+
     void Start()
     {
         delayTime += Random.Range(0f, .5f);
@@ -25,6 +28,8 @@ public class Enemy : MonoBehaviour
         player = GameObject.FindObjectOfType<PlayerControl>();
         int randDir = Random.Range(0, 360);
         transform.rotation = Quaternion.Euler(0, 0, randDir);
+
+        splitter = GetComponent<ESplitter>();
     }
 
     void Update()
@@ -62,7 +67,14 @@ public class Enemy : MonoBehaviour
     {
         if (col.gameObject.tag == "PBullet")
         {
-            health -= 1;
+            if (splitter == null)
+            {
+                health -= 1;
+            }
+            else if (splitter.splitNumber == 3)
+            {
+                health -= 1;
+            }
         }
     }
 }

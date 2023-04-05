@@ -139,7 +139,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   e: {fileID: 0}
   speed: 0
-  attackEffect: {fileID: 9043871809213866069, guid: 9bc57bdc196bf0040808bf29c50c352a, type: 3}
+  attackEffect: {fileID: 9043871809213866069, guid: 63401176fd831f04ca3a09d2279296ad, type: 3}
 --- !u!50 &-7303193727571537457
 Rigidbody2D:
   serializedVersion: 4
