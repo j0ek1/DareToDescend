@@ -28,7 +28,7 @@ public class GameControl : MonoBehaviour
 
     [Header("UI")]
     public MinimapControl minimap;
-    public Image blackScreen;
+    public Animator blackScreen;
 
     [Header("Entities")]
     public Movement player;
@@ -202,7 +202,7 @@ public class GameControl : MonoBehaviour
             // this is where enemies are spawned
             // enemies with a higher number in the list will be harder/difficult
             // on each floor less common to spawn a lower number?
-            Instantiate(enemyType[0], spawnPos, Quaternion.identity);
+            Instantiate(enemyType[2], spawnPos, Quaternion.identity);
 
             // Add enemies spawn position to list to prevent spawn overlapping
             xPrev.Add(xRand);
@@ -224,19 +224,11 @@ public class GameControl : MonoBehaviour
         return splitter;
     }
 
-    public void Descend()
+    public IEnumerator Descend()
     {
-        // Fade to black
-        //StartCoroutine(FadeLevel(true));
-        //Color newColor = blackScreen.color;
-        //float fadeAmount;
-        //while (blackScreen.color.a < 1f)
-        //{
-        //    fadeAmount = newColor.a + (0.5f * Time.deltaTime);
-        //    newColor = new Color(blackScreen.color.r, blackScreen.color.g, blackScreen.color.b, fadeAmount);
-        //    blackScreen.color = newColor;
-        //    Debug.Log(fadeAmount);
-        //}
+        blackScreen.Play("FadeToBlack");
+
+        yield return new WaitForSeconds(0.22f);
 
         // Freeze player and reset position
         player.canMove = false;
@@ -267,15 +259,5 @@ public class GameControl : MonoBehaviour
         minimap.ClearMinimap(); // Reset minimap
 
         InitializeFloor(); // Setup next floor
-
-        // Fade back
-        //StartCoroutine(FadeLevel(false));
-        //while (blackScreen.color.a > 0f)
-        //{
-        //    fadeAmount = newColor.a - (0.5f * Time.deltaTime);
-        //    newColor = new Color(blackScreen.color.r, blackScreen.color.g, blackScreen.color.b, fadeAmount);
-        //    blackScreen.color = newColor;
-        //    Debug.Log(fadeAmount);
-        //}
     }
 }

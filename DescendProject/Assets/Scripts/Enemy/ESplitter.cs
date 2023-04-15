@@ -62,17 +62,20 @@ public class ESplitter : MonoBehaviour
                 if (splitNumber == 1) // If it is the first split, spawn 3 more with less health and smaller scale
                 {
                     nextSplitter[i].health = 3;
+                    nextSplitter[i].maxSpeed = 3.5f;
                     nextSplitter[i].gameObject.transform.localScale = new Vector3(0.5f, 0.5f, 1f);
                     nextSplitter[i].splitNumber = 2;
 
                 }
                 if (splitNumber == 2) // If it is the second split, reduce scale but no need to change health as it is handled in main Enemy script
                 {
+                    nextSplitter[i].maxSpeed = 4.5f;
                     nextSplitter[i].gameObject.transform.localScale = new Vector3(0.3f, 0.3f, 1f);
                     nextSplitter[i].splitNumber = 3;
                 }               
             }
             nextSplitter.Clear();
+            gameControl.currentEnemies.Remove(gameObject);
             Destroy(gameObject);
         }
     }

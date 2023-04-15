@@ -30,7 +30,7 @@ public class Shooting : MonoBehaviour
         if (Input.GetButton("Fire1") && shootTimer == 0 && player.canMove)
         {
             Shoot();
-            shootTimer = .5f;
+            shootTimer = .2f;
         }
 
     }

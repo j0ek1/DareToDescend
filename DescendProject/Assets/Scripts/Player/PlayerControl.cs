@@ -20,7 +20,7 @@ public class PlayerControl : MonoBehaviour
             // UI CODE FOR PRESSING E HERE "PRESS E TO DESCEND"
             if (Input.GetKeyDown(KeyCode.E))
             {
-                gameControl.Descend();
+                gameControl.StartCoroutine("Descend");
             }
         }
 
