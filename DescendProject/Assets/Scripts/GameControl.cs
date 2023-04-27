@@ -29,6 +29,7 @@ public class GameControl : MonoBehaviour
     [Header("UI")]
     public MinimapControl minimap;
     public Animator blackScreen;
+    public UIManager uiM;
 
     [Header("Entities")]
     public Movement player;
@@ -224,6 +225,7 @@ public class GameControl : MonoBehaviour
         return splitter;
     }
 
+    // Controls changing floor
     public IEnumerator Descend()
     {
         blackScreen.Play("FadeToBlack");
@@ -236,6 +238,7 @@ public class GameControl : MonoBehaviour
         player.transform.position = Vector2.zero;
 
         floor++; // Increase floor completion count
+        uiM.UpdateFloor(floor);
 
         // Reset necessary variables
         doorTriggers.transform.position = Vector2.zero;

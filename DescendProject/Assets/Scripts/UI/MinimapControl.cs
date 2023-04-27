@@ -19,6 +19,8 @@ public class MinimapControl : MonoBehaviour
         return calcPos;
     }
 
+
+    // Setup minimap with initial room
     public void InitializeMinimap()
     {
         Minimap sect = Instantiate(mapSect, minimap);
@@ -27,7 +29,7 @@ public class MinimapControl : MonoBehaviour
         currentMap.Add(sect.gameObject);
     }
 
-    public void UpdateMinimap(Vector2 currentPos, int dir) // If room entered is uncleared, update minimap
+    public void UpdateMinimap(Vector2 currentPos, int dir) // If room entered is uncleared, update minimap by adding new section and adding a door on old section
     {
         Minimap sect = Instantiate(mapSect, minimap);
         sect.transform.localPosition = CalculatePos(currentPos);

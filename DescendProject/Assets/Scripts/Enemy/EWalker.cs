@@ -34,7 +34,7 @@ public class EWalker : MonoBehaviour
         // If in attack range, attack player
         if (Vector2.Distance(transform.position, e.player.transform.position) < attackRange && canAttack)
         {
-            e.player.health -= 1;
+            e.player.HealthChange(-1f);
             GameObject effect = Instantiate(attackEffect.gameObject, transform.position, Quaternion.identity, transform);
             Destroy(effect, 1f);
             attackTimer = .5f;

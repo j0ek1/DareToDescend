@@ -6,7 +6,8 @@ public class PlayerControl : MonoBehaviour
 {
     public GameControl gameControl;
     private bool canLadder = false;
-    public int health;
+    public float health;
+    public UIManager uiM;
 
     void Start()
     {
@@ -24,7 +25,7 @@ public class PlayerControl : MonoBehaviour
             }
         }
 
-        if (health <= 0)
+        if (health <= 0f)
         {
             // game over here
         }
@@ -34,8 +35,14 @@ public class PlayerControl : MonoBehaviour
     {
         if (col.gameObject.tag == "EBullet")
         {
-            health -= 1;
+            HealthChange(-0.5f);
         }
+    }
+
+    public void HealthChange(float change)
+    {
+        health += change;
+        uiM.UpdateHealth();
     }
 
     private void OnTriggerEnter2D(Collider2D col)
