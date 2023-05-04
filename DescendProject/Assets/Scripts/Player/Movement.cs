@@ -19,7 +19,7 @@ public class Movement : MonoBehaviour
 
     private bool isDashing = false;
     private float dashForce = 3f;
-    private float dashTimer = 0f;
+    public float dashTimer = 0f;
     private float dashTime = 0.15f;
 
     public bool canMove;

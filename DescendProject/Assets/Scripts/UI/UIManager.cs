@@ -6,14 +6,21 @@ using TMPro;
 
 public class UIManager : MonoBehaviour
 {
-    public TMP_Text floorTxt;
-
-    public Image[] healthPoints;
     public PlayerControl player;
+    public Movement movement;
+
+    public TMP_Text floorTxt;
+    public Image[] healthPoints;
+    public Image dashBar;
+
     public Sprite fullHP;
     public Sprite halfHP;
     public Sprite emptyHP;
 
+    void Update()
+    {
+        dashBar.fillAmount = (1f - movement.dashTimer) / 1f;
+    }
 
     public void UpdateHealth()
     {
