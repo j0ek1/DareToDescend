@@ -22,6 +22,7 @@ public class UIManager : MonoBehaviour
         dashBar.fillAmount = (1f - movement.dashTimer) / 1f;
     }
 
+    // Called everytime player takes damage and updates health UI accordingly
     public void UpdateHealth()
     {
         for (int i = 0; i < healthPoints.Length; i++)
@@ -44,6 +45,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    // Changes floor number when player descends
     public void UpdateFloor(int floorNum)
     {
         floorTxt.text = "FLOOR: " + floorNum;

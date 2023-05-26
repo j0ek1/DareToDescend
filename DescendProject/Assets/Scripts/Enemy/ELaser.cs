@@ -14,6 +14,8 @@ public class ELaser : MonoBehaviour
     private LineRenderer lr;
     private Vector2 endPosition = new Vector2();
     private Vector2 shotDirection = new Vector2();
+    private Vector2 lineExtendedPosition = new Vector2();
+    private bool delayShot = false;
 
 
     void Start()
@@ -32,17 +34,39 @@ public class ELaser : MonoBehaviour
             endPosition = e.player.transform.position;
             lr.SetPosition(0, transform.position);
             lr.SetPosition(1, endPosition);
-            lr.startWidth = aimTimer / 7.5f;
+            if (aimTimer > 0.2f)
+            {
+                lr.startWidth = aimTimer / 7.5f;
+            }
+            else
+            {
+                lr.startWidth = 0.026f;
+            }
+            
         }
-        if (aimTimer <= 0 && e.delayStart)
+        if (aimTimer <= 0 && !delayShot)
         {
-            shotDirection = endPosition - (Vector2)firePos.position;
-            // start delay timer here
+            shotDirection = endPosition - (Vector2)firePos.position; // Calculate final shot direction
+            lineExtendedPosition = endPosition + (shotDirection.normalized * 5f);
+            lr.SetPosition(1, lineExtendedPosition);
+            lr.startColor = Color.red; // CAN FADE COLORS INSTEAD OF STRAIGHT UP CHANGE
+            lr.endColor = Color.red;
+            delayShot = true;
+            aimTimer = 0;
+        }
+        if (aimTimer == 0)
+        {
+            shotDelayTimer -= Time.deltaTime;
+        }
+        if (shotDelayTimer <= 0)
+        {
             Shoot();
             aimTimer = 1.5f;
-            lr.startWidth = 0.2f;
+            shotDelayTimer = 0.2f;
+            lr.startColor = Color.white;
+            lr.endColor = Color.white;
+            delayShot = false;
         }
-
     }
 
     void Shoot()

@@ -82,6 +82,7 @@ public class ESplitter : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D col)
     {
+        // Reduce health if it is not on the last split
         if (col.gameObject.tag == "PBullet")
         {
             if (splitNumber != 3)

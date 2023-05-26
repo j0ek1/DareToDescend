@@ -47,6 +47,7 @@ public class PlayerControl : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D col)
     {
+        // If player collides with door trigger, move room based on which direction the trigger was
         switch (col.gameObject.name)
         {
             case "TTrig":
@@ -64,6 +65,7 @@ public class PlayerControl : MonoBehaviour
             default:
                 break;
         }
+
         if (col.gameObject.tag == "Ladder")
         {
             canLadder = true;

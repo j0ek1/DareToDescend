@@ -17,7 +17,7 @@ public class Shooting : MonoBehaviour
 
     void Update()
     {
-        // Timer for dash cooldown
+        // Timer for shoot cooldown
         if (shootTimer > 0)
         {
             shootTimer -= Time.deltaTime;
