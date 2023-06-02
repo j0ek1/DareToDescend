@@ -203,7 +203,7 @@ public class GameControl : MonoBehaviour
             // this is where enemies are spawned
             // enemies with a higher number in the list will be harder/difficult
             // on each floor less common to spawn a lower number?
-            Instantiate(enemyType[2], spawnPos, Quaternion.identity);
+            Instantiate(enemyType[3], spawnPos, Quaternion.identity);
 
             // Add enemies spawn position to list to prevent spawn overlapping
             xPrev.Add(xRand);
