@@ -1948,9 +1948,13 @@ MonoBehaviour:
   bulletPrefab: {fileID: 289361894282029443, guid: cb35c0807eaa6814aa5ec69ea44c3062, type: 3}
   bulletForce: 2
   player: {fileID: 2125742232}
-  shootingEffect:
-  - {fileID: 2021145389742900672, guid: 7c4e4146891d8354eab9bc1c83c88391, type: 3}
-  gunID: 0
+  activeGunSlot: 0
+  gunSlot:
+  - {fileID: 0}
+  - {fileID: 0}
+  guns:
+  - {fileID: 11400000, guid: 2f9f20c607d920a4abd60e7084fa224a, type: 2}
+  - {fileID: 11400000, guid: d64f354a89e76bc498fed6e7b50018c7, type: 2}
   vfxPos: {fileID: 214440034}
 --- !u!114 &2125742236
 MonoBehaviour:

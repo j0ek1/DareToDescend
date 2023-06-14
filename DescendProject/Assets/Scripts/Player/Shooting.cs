@@ -11,10 +11,17 @@ public class Shooting : MonoBehaviour
     private float shootTimer = 0f;
     public Movement player;
 
-    public VisualEffect[] shootingEffect;
-    public int gunID;
+    public int activeGunSlot;
+    public GunData[] gunSlot = new GunData[2];
+    public GunData[] guns;
     public Transform vfxPos;
 
+    void Start()
+    {
+        activeGunSlot = 0;
+        gunSlot[0] = guns[0];
+        gunSlot[1] = guns[1];
+    }
     void Update()
     {
         // Timer for shoot cooldown
@@ -27,12 +34,38 @@ public class Shooting : MonoBehaviour
             shootTimer = 0;
         }
 
-        if (Input.GetButton("Fire1") && shootTimer == 0 && player.canMove)
+        // Fire inputs
+        if (gunSlot[activeGunSlot].automatic) // If gun is automatic player can hold down fire button
         {
-            Shoot();
-            shootTimer = .2f;
+            if (Input.GetButton("Fire1") && shootTimer == 0 && player.canMove)
+            {
+                Shoot();
+                shootTimer = gunSlot[activeGunSlot].shootInterval;
+            }
+        }
+        else // If gun is not automatic player cannot hold down fire button to shoot
+        {
+            if (Input.GetButtonDown("Fire1") && shootTimer == 0 && player.canMove)
+            {
+                Shoot();
+                shootTimer = gunSlot[activeGunSlot].shootInterval;
+            }
         }
 
+        // Weapon switching
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            activeGunSlot = 0;
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            activeGunSlot = 1;
+        }
+        if (Input.GetAxis("Mouse ScrollWheel") > 0f || Input.GetAxis("Mouse ScrollWheel") < 0f)
+        {
+            activeGunSlot = 1 - activeGunSlot;
+            Debug.Log("active slot = " + activeGunSlot);
+        }
     }
 
     void Shoot()
@@ -43,7 +76,7 @@ public class Shooting : MonoBehaviour
         rb.AddForce(firePos.up * bulletForce, ForceMode2D.Impulse);
 
         // Muzzle flash VFX
-        GameObject effect = Instantiate(shootingEffect[gunID].gameObject, vfxPos.position, vfxPos.rotation, transform);
+        GameObject effect = Instantiate(gunSlot[activeGunSlot].shootingVFX.gameObject, vfxPos.position, vfxPos.rotation, transform);
         Destroy(effect, .2f);
     }
 }
