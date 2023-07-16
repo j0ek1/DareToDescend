@@ -357,7 +357,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 571ab08f43119314891206b4fc1458e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 2125742236}
   movement: {fileID: 2125742232}
   floorTxt: {fileID: 1947781480}
   healthPoints:
@@ -365,6 +364,7 @@ MonoBehaviour:
   - {fileID: 1182733425}
   - {fileID: 2009982889}
   dashBar: {fileID: 291100375}
+  crosshair: {fileID: 1772237213}
   fullHP: {fileID: 21300000, guid: f158b1b2725670e4fac468c26422575e, type: 3}
   halfHP: {fileID: 21300000, guid: 83ff3d4e681c0ca428e172ad51ce55ea, type: 3}
   emptyHP: {fileID: 21300000, guid: 6805ccac1ba5dd34b9aade05cb618a95, type: 3}
@@ -1948,6 +1948,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 289361894282029443, guid: cb35c0807eaa6814aa5ec69ea44c3062, type: 3}
   bulletForce: 2
   player: {fileID: 2125742232}
+  uiM: {fileID: 159354140}
   activeGunSlot: 0
   gunSlot:
   - {fileID: 0}

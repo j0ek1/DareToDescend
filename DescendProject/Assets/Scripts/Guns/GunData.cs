@@ -12,13 +12,13 @@ public class GunData : ScriptableObject
     [Header("Shooting")]
     public float damage;
     public float shootInterval;
-    public bool automatic;
+    public bool isAutomatic;
 
     [Header("Reloading")]
     public int currentAmmo;
     public int magSize;
     public float reloadTime;
-    public bool reloading;
+    public bool isReloading;
 
     [Header("UI/VFX")]
     public VisualEffect shootingVFX;

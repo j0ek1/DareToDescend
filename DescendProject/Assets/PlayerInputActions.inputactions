@@ -1,0 +1,34 @@
+{
+    "name": "PlayerInputActions",
+    "maps": [
+        {
+            "name": "Player",
+            "id": "df7c0815-7597-47a8-bc6f-fbdb4b4cd515",
+            "actions": [
+                {
+                    "name": "ScrollSwitchWeapon",
+                    "type": "PassThrough",
+                    "id": "13b62301-9c38-4728-93fb-5f904056588e",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "8eeeb3ff-26e7-4d83-a661-e53a4d07fe7f",
+                    "path": "<Mouse>/scroll/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ScrollSwitchWeapon",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

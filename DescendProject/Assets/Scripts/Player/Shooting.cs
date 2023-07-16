@@ -8,10 +8,12 @@ public class Shooting : MonoBehaviour
     public Transform firePos;
     public GameObject bulletPrefab;
     public float bulletForce;
-    private float shootTimer = 0f;
+    private float intervalTimer = 0f;
     public Movement player;
+    public UIManager uiM;
 
     public int activeGunSlot;
+    private float reloadTimer = 0f;
     public GunData[] gunSlot = new GunData[2];
     public GunData[] guns;
     public Transform vfxPos;
@@ -24,51 +26,59 @@ public class Shooting : MonoBehaviour
     }
     void Update()
     {
-        // Timer for shoot cooldown
-        if (shootTimer > 0)
+        // Timer for the delay between shots
+        if (intervalTimer > 0)
         {
-            shootTimer -= Time.deltaTime;
+            intervalTimer -= Time.deltaTime;
         }
-        if (shootTimer < 0)
+        if (intervalTimer < 0)
         {
-            shootTimer = 0;
+            intervalTimer = 0;
+        }
+
+        if (gunSlot[activeGunSlot].currentAmmo == 0)
+        {
+            if (!gunSlot[activeGunSlot].isReloading)
+            {
+                reloadTimer = gunSlot[activeGunSlot].reloadTime;
+                StartCoroutine(uiM.SpinCrosshair(reloadTimer));
+            }
+            Reload();
         }
 
         // Fire inputs
-        if (gunSlot[activeGunSlot].automatic) // If gun is automatic player can hold down fire button
+        if (!gunSlot[activeGunSlot].isReloading && intervalTimer == 0 && player.canMove)
         {
-            if (Input.GetButton("Fire1") && shootTimer == 0 && player.canMove)
+            if (gunSlot[activeGunSlot].isAutomatic) // If gun is automatic player can hold down fire button
             {
-                Shoot();
-                shootTimer = gunSlot[activeGunSlot].shootInterval;
+                if (Input.GetButton("Fire1"))
+                {
+                    Shoot();
+                    intervalTimer = gunSlot[activeGunSlot].shootInterval;
+                }
             }
-        }
-        else // If gun is not automatic player cannot hold down fire button to shoot
-        {
-            if (Input.GetButtonDown("Fire1") && shootTimer == 0 && player.canMove)
+            else // If gun is not automatic player cannot hold down fire button to shoot
             {
-                Shoot();
-                shootTimer = gunSlot[activeGunSlot].shootInterval;
+                if (Input.GetButtonDown("Fire1"))
+                {
+                    Shoot();
+                    intervalTimer = gunSlot[activeGunSlot].shootInterval;
+                }
             }
         }
 
-        // Weapon switching
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            activeGunSlot = 0;
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            activeGunSlot = 1;
-        }
-        if (Input.GetAxis("Mouse ScrollWheel") > 0f || Input.GetAxis("Mouse ScrollWheel") < 0f)
+        // Weapon switching for num keys and scroll wheel
+        if (Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Alpha2) || Input.GetAxis("Mouse ScrollWheel") > 0f || Input.GetAxis("Mouse ScrollWheel") < 0f)
         {
             activeGunSlot = 1 - activeGunSlot;
-            Debug.Log("active slot = " + activeGunSlot);
+            if (gunSlot[activeGunSlot].currentAmmo == 0)
+            {
+                reloadTimer = gunSlot[activeGunSlot].reloadTime;
+            }
         }
     }
 
-    void Shoot()
+    private void Shoot()
     {
         // Instantiate bullet and add force to fire
         GameObject bullet = Instantiate(bulletPrefab, firePos.position, firePos.rotation);
@@ -78,5 +88,30 @@ public class Shooting : MonoBehaviour
         // Muzzle flash VFX
         GameObject effect = Instantiate(gunSlot[activeGunSlot].shootingVFX.gameObject, vfxPos.position, vfxPos.rotation, transform);
         Destroy(effect, .2f);
+
+        // Decrease current ammo
+        gunSlot[activeGunSlot].currentAmmo -= 1;
+    }
+
+    // Handles timer for reloading and the associated gun variables
+    private void Reload()
+    {
+        gunSlot[activeGunSlot].isReloading = true;
+        if (reloadTimer > 0)
+        {
+            reloadTimer -= Time.deltaTime;
+        }
+        if (reloadTimer < 0)
+        {
+            reloadTimer = 0;
+            gunSlot[activeGunSlot].currentAmmo = gunSlot[activeGunSlot].magSize;
+            gunSlot[activeGunSlot].isReloading = false;
+        }
+    }
+
+    public float XHairZRotation()
+    {
+        float z = -((reloadTimer / gunSlot[activeGunSlot].reloadTime) * 360f) / 360f;
+        return z;
     }
 }

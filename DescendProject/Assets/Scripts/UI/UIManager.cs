@@ -6,13 +6,16 @@ using TMPro;
 
 public class UIManager : MonoBehaviour
 {
-    public PlayerControl player;
+    [Header("References")]
     public Movement movement;
 
+    [Header("UI Elements")]
     public TMP_Text floorTxt;
     public Image[] healthPoints;
     public Image dashBar;
+    public GameObject crosshair;
 
+    [Header("Resources")]
     public Sprite fullHP;
     public Sprite halfHP;
     public Sprite emptyHP;
@@ -23,13 +26,13 @@ public class UIManager : MonoBehaviour
     }
 
     // Called everytime player takes damage and updates health UI accordingly
-    public void UpdateHealth()
+    public void UpdateHealth(float playerHealth)
     {
         for (int i = 0; i < healthPoints.Length; i++)
         {
-            if (i < player.health)
+            if (i < playerHealth)
             {
-                if (i + 0.5 == player.health)
+                if (i + 0.5 == playerHealth)
                 {
                     healthPoints[i].sprite = halfHP;
                 }
@@ -51,5 +54,18 @@ public class UIManager : MonoBehaviour
         floorTxt.text = "FLOOR: " + floorNum;
     }
 
-    
+    // Crosshair spin effect for reloading
+    public IEnumerator SpinCrosshair(float duration)
+    {
+        float startRotation = 0f;
+        float endRotation = -360f;
+        float t = 0.0f;
+        while (t < duration)
+        {
+            t += Time.deltaTime;
+            float zRotation = Mathf.Lerp(startRotation, endRotation, t / duration) % 360f;
+            crosshair.transform.eulerAngles = new Vector3(crosshair.transform.eulerAngles.x, crosshair.transform.eulerAngles.y, zRotation);
+            yield return null;
+        }
+    }
 }

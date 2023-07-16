@@ -42,7 +42,7 @@ public class PlayerControl : MonoBehaviour
     public void HealthChange(float change)
     {
         health += change;
-        uiM.UpdateHealth();
+        uiM.UpdateHealth(health);
     }
 
     private void OnTriggerEnter2D(Collider2D col)

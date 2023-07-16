@@ -15,10 +15,10 @@ MonoBehaviour:
   gunName: Pistol
   damage: 1
   shootInterval: 0.4
-  automatic: 0
+  isAutomatic: 0
   currentAmmo: 8
   magSize: 8
   reloadTime: 1
-  reloading: 0
+  isReloading: 0
   shootingVFX: {fileID: 2021145389742900672, guid: 7c4e4146891d8354eab9bc1c83c88391, type: 3}
   vfxPos: {fileID: 0}
