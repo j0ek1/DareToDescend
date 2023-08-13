@@ -15,7 +15,6 @@ public class GunData : ScriptableObject
     public bool isAutomatic;
 
     [Header("Reloading")]
-    public int currentAmmo;
     public int magSize;
     public float reloadTime;
     public bool isReloading;

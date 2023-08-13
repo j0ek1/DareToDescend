@@ -14,6 +14,7 @@ public class Shooting : MonoBehaviour
 
     public int activeGunSlot;
     private float reloadTimer = 0f;
+    private int[] currentAmmo = new int[2];
     public GunData[] gunSlot = new GunData[2];
     public GunData[] guns;
     public Transform vfxPos;
@@ -22,7 +23,8 @@ public class Shooting : MonoBehaviour
     {
         activeGunSlot = 0;
         gunSlot[0] = guns[0];
-        gunSlot[1] = guns[1];
+        currentAmmo[0] = guns[activeGunSlot].magSize;
+        //gunSlot[1] = guns[1];
     }
     void Update()
     {
@@ -36,7 +38,7 @@ public class Shooting : MonoBehaviour
             intervalTimer = 0;
         }
 
-        if (gunSlot[activeGunSlot].currentAmmo == 0)
+        if (currentAmmo[activeGunSlot] == 0)
         {
             if (!gunSlot[activeGunSlot].isReloading)
             {
@@ -70,10 +72,13 @@ public class Shooting : MonoBehaviour
         // Weapon switching for num keys and scroll wheel
         if (Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Alpha2) || Input.GetAxis("Mouse ScrollWheel") > 0f || Input.GetAxis("Mouse ScrollWheel") < 0f)
         {
-            activeGunSlot = 1 - activeGunSlot;
-            if (gunSlot[activeGunSlot].currentAmmo == 0)
+            if (gunSlot[1 - activeGunSlot] != null) // If gunslot is null (no weapon), player can't switch weapon
             {
-                reloadTimer = gunSlot[activeGunSlot].reloadTime;
+                activeGunSlot = 1 - activeGunSlot;
+                if (currentAmmo[activeGunSlot] == 0)
+                {
+                    reloadTimer = gunSlot[activeGunSlot].reloadTime;
+                }
             }
         }
     }
@@ -90,7 +95,7 @@ public class Shooting : MonoBehaviour
         Destroy(effect, .2f);
 
         // Decrease current ammo
-        gunSlot[activeGunSlot].currentAmmo -= 1;
+        currentAmmo[activeGunSlot] -= 1;
     }
 
     // Handles timer for reloading and the associated gun variables
@@ -104,14 +109,8 @@ public class Shooting : MonoBehaviour
         if (reloadTimer < 0)
         {
             reloadTimer = 0;
-            gunSlot[activeGunSlot].currentAmmo = gunSlot[activeGunSlot].magSize;
+            currentAmmo[activeGunSlot] = gunSlot[activeGunSlot].magSize;
             gunSlot[activeGunSlot].isReloading = false;
         }
-    }
-
-    public float XHairZRotation()
-    {
-        float z = -((reloadTimer / gunSlot[activeGunSlot].reloadTime) * 360f) / 360f;
-        return z;
     }
 }
