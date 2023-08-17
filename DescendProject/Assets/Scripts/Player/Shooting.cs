@@ -15,16 +15,23 @@ public class Shooting : MonoBehaviour
     public int activeGunSlot;
     private float reloadTimer = 0f;
     private int[] currentAmmo = new int[2];
+    private bool[] isReloading = new bool[2];
     public GunData[] gunSlot = new GunData[2];
     public GunData[] guns;
     public Transform vfxPos;
+
+    private Coroutine lastCrosshairCoroutine = null;
+    private Coroutine lastAmmoCoroutine = null;
 
     void Start()
     {
         activeGunSlot = 0;
         gunSlot[0] = guns[0];
-        currentAmmo[0] = guns[activeGunSlot].magSize;
-        //gunSlot[1] = guns[1];
+        currentAmmo[0] = guns[0].magSize;
+        isReloading[0] = false;
+        gunSlot[1] = guns[1];
+        currentAmmo[1] = guns[1].magSize;
+        isReloading[1] = false;
     }
     void Update()
     {
@@ -38,18 +45,19 @@ public class Shooting : MonoBehaviour
             intervalTimer = 0;
         }
 
-        if (currentAmmo[activeGunSlot] == 0)
+        if (currentAmmo[activeGunSlot] == 0 || Input.GetKeyDown(KeyCode.R))
         {
-            if (!gunSlot[activeGunSlot].isReloading)
+            if (!isReloading[activeGunSlot])
             {
                 reloadTimer = gunSlot[activeGunSlot].reloadTime;
-                StartCoroutine(uiM.SpinCrosshair(reloadTimer));
+                lastCrosshairCoroutine = StartCoroutine(uiM.SpinCrosshair(reloadTimer));
+                lastAmmoCoroutine = StartCoroutine(uiM.ReloadAmmo(reloadTimer));
             }
             Reload();
         }
 
         // Fire inputs
-        if (!gunSlot[activeGunSlot].isReloading && intervalTimer == 0 && player.canMove)
+        if (!isReloading[activeGunSlot] && intervalTimer == 0 && player.canMove)
         {
             if (gunSlot[activeGunSlot].isAutomatic) // If gun is automatic player can hold down fire button
             {
@@ -74,11 +82,25 @@ public class Shooting : MonoBehaviour
         {
             if (gunSlot[1 - activeGunSlot] != null) // If gunslot is null (no weapon), player can't switch weapon
             {
+                // Stop previous coroutines because weapon changed
+                StopCoroutine(lastCrosshairCoroutine);
+                StopCoroutine(lastAmmoCoroutine);
+
+                // Change active gun
                 activeGunSlot = 1 - activeGunSlot;
+
+                // If the gun still needs to reload, start the reload process again
                 if (currentAmmo[activeGunSlot] == 0)
                 {
                     reloadTimer = gunSlot[activeGunSlot].reloadTime;
+                    lastCrosshairCoroutine = StartCoroutine(uiM.SpinCrosshair(reloadTimer));
+                    lastAmmoCoroutine = StartCoroutine(uiM.ReloadAmmo(reloadTimer));
                 }
+
+                // Update the gun UI variables as the weapon has been changed
+                uiM.UpdateGun(guns[activeGunSlot].ID);
+                uiM.UpdateAmmo(currentAmmo[activeGunSlot], gunSlot[activeGunSlot].magSize);
+                uiM.ResetCrosshair();
             }
         }
     }
@@ -96,12 +118,15 @@ public class Shooting : MonoBehaviour
 
         // Decrease current ammo
         currentAmmo[activeGunSlot] -= 1;
+
+        // Update ammo UI
+        uiM.UpdateAmmo(currentAmmo[activeGunSlot], gunSlot[activeGunSlot].magSize);
     }
 
     // Handles timer for reloading and the associated gun variables
     private void Reload()
     {
-        gunSlot[activeGunSlot].isReloading = true;
+        isReloading[activeGunSlot] = true;
         if (reloadTimer > 0)
         {
             reloadTimer -= Time.deltaTime;
@@ -110,7 +135,7 @@ public class Shooting : MonoBehaviour
         {
             reloadTimer = 0;
             currentAmmo[activeGunSlot] = gunSlot[activeGunSlot].magSize;
-            gunSlot[activeGunSlot].isReloading = false;
+            isReloading[activeGunSlot] = false;
         }
     }
 }

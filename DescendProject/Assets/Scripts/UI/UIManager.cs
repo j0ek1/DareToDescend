@@ -9,16 +9,24 @@ public class UIManager : MonoBehaviour
     [Header("References")]
     public Movement movement;
 
+    [Header("Variables")]
+    public bool hasSwitched;
+
     [Header("UI Elements")]
-    public TMP_Text floorTxt;
-    public Image[] healthPoints;
-    public Image dashBar;
-    public GameObject crosshair;
+    [SerializeField] private TMP_Text floorTxt;
+    [SerializeField] private Image[] healthPoints;
+    [SerializeField] private Image dashBar;
+    [SerializeField] private GameObject crosshair;
+    [SerializeField] private Image gunImage;
+    [SerializeField] private Slider ammoSlider;
+    [SerializeField] private Slider ammoBgSlider;
 
     [Header("Resources")]
-    public Sprite fullHP;
-    public Sprite halfHP;
-    public Sprite emptyHP;
+    [SerializeField] private Sprite fullHP;
+    [SerializeField] private Sprite halfHP;
+    [SerializeField] private Sprite emptyHP;
+
+    [SerializeField] private Sprite[] gunSprites;
 
     void Update()
     {
@@ -54,6 +62,42 @@ public class UIManager : MonoBehaviour
         floorTxt.text = "FLOOR: " + floorNum;
     }
 
+    public void UpdateGun(int gunID)
+    {
+        gunImage.sprite = gunSprites[gunID];
+    }
+
+    public void UpdateAmmo(int currentAmmo, int maxAmmo)
+    {
+        ammoSlider.value = (float)currentAmmo / (float)maxAmmo;
+        ammoBgSlider.value = ((float)maxAmmo - (float)currentAmmo) / (float)maxAmmo;
+    }
+
+    // Ammo slider reload effect
+    public IEnumerator ReloadAmmo(float duration)
+    {
+        float startValue = 0f;
+        float endValue = 1f;
+        float t = 0.0f;
+        while (t < duration)
+        {
+            if (hasSwitched)
+            {
+                yield break;
+            }
+            t += Time.deltaTime;
+            float fillValue = Mathf.Lerp(startValue, endValue, t / duration);
+            ammoSlider.value = fillValue;
+            ammoBgSlider.value = 1f - fillValue;
+            yield return null;
+        }
+    }
+
+    public void ResetCrosshair()
+    {
+        crosshair.transform.eulerAngles = Vector3.zero;
+    }
+
     // Crosshair spin effect for reloading
     public IEnumerator SpinCrosshair(float duration)
     {
@@ -62,6 +106,10 @@ public class UIManager : MonoBehaviour
         float t = 0.0f;
         while (t < duration)
         {
+            if (hasSwitched)
+            {
+                yield break;
+            }
             t += Time.deltaTime;
             float zRotation = Mathf.Lerp(startRotation, endRotation, t / duration) % 360f;
             crosshair.transform.eulerAngles = new Vector3(crosshair.transform.eulerAngles.x, crosshair.transform.eulerAngles.y, zRotation);

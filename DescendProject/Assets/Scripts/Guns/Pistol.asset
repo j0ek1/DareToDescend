@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e80af8ae86770d74182e5b6a76848598, type: 3}
   m_Name: Pistol
   m_EditorClassIdentifier: 
-  gunName: Pistol
+  weaponName: Pistol
+  ID: 0
   damage: 1
   shootInterval: 0.4
   isAutomatic: 0
-  currentAmmo: 8
   magSize: 8
   reloadTime: 1
   isReloading: 0

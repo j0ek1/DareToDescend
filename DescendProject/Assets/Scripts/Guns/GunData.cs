@@ -7,7 +7,8 @@ using UnityEngine.VFX;
 public class GunData : ScriptableObject
 {
     [Header("Info")]
-    public string gunName;
+    public string weaponName;
+    public int ID;
     
     [Header("Shooting")]
     public float damage;
@@ -17,7 +18,6 @@ public class GunData : ScriptableObject
     [Header("Reloading")]
     public int magSize;
     public float reloadTime;
-    public bool isReloading;
 
     [Header("UI/VFX")]
     public VisualEffect shootingVFX;
